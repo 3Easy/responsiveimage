@@ -16,10 +16,10 @@ var responsiveImage = function(img, width, monitor) {
 		if (img.clientWidth > 320 && img.clientWidth < 481) {
 			_size = '_480';
 			var responsiveimg = new Image();
-	    addEvent(responsiveimg, 'load', function(e) {
-	        img.src = this.src;
-	    });
-	    responsiveimg.src = _src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + _size + '$3');
+			addEvent(responsiveimg, 'load', function(e) {
+		      img.src = this.src;
+		  });
+		  responsiveimg.src = _src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + _size + '$3');
 		}
 		
 		if (img.clientWidth > 480 && img.clientWidth < 769) {
@@ -38,7 +38,7 @@ var responsiveImage = function(img, width, monitor) {
 			    img.src = this.src;
 			});
 			responsiveimg.src = _src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + _size + '$3');
-		}
+}
 		
 		console.log('viewport = ' + img.clientWidth + ' therefore image size = ' + _size);
 	}
@@ -52,6 +52,3 @@ var responsiveImage = function(img, width, monitor) {
 		});
 	}
 };
-
-
-

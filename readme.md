@@ -7,6 +7,7 @@ This script checks if an image is larger than a specified width, then loads in a
 * Adhering the the principles of mobile first, the smallest image is included in the markup
 * We use an `id="responsiveimage"` on the`img` element to trigger the magic
 * No additional `class`es or `data` attributes pointing to other image sources are required
+* Automatically created images at multiple sizes, using EE, are waiting in the wings
 * The script compares the viewport width to a number of breakpoints in the script
 * And switches the path to the most appropriately sized image
 

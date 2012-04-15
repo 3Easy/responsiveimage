@@ -1,13 +1,13 @@
 # Responsive Image
 
-This script checks if an image is larger than a specified width, then loads in a higher resolution image, choosing the most appropriately sized image for the current viewport measurements. This is an [ExpressionEngine](http://expressionengine.com/) focussed implementation, but can be adapted easily for use elsewhere.
+The script checks if an image is larger than a specified width, then loads in a higher resolution image. It compares the current viewport width to an array of user set breakpoints then updates the `src` to the most appropriately sized image. This is an [ExpressionEngine](http://expressionengine.com/) focussed implementation, but can be adapted easily for use elsewhere.
 
 #### Method
 
-* Adhering the the principles of mobile first, the smallest image is included in the markup
-* We use an `id="responsiveimage"` on the`img` element to trigger the magic
-* No additional `class`es or `data` attributes pointing to other image sources are required
-* Automatically created images at multiple sizes, using EE, are waiting in the wings
+* Adhering the the principles of mobile first, the smallest image should be included in the markup
+* The user sets the breakpoint values in the array to match the image options they have prepared
+* We use an `id="responsiveimage"` on the`img` element to trigger the script
+* No need for additional `class` or `data` attributes pointing to other image sources are required
 * The script compares the viewport width to a number of breakpoints in the script
 * And switches the path to the most appropriately sized image
 
@@ -47,48 +47,28 @@ Inspiration from [Automatic Responsive Images in WordPress](http://viewportindus
 	var addEvent=function(){return document.addEventListener?function(a,c,d){if(a&&a.nodeName||a===window)a.addEventListener(c,d,!1);else if(a&&a.length)for(var b=0;b<a.length;b++)addEvent(a[b],c,d)}:function(a,c,d){if(a&&a.nodeName||a===window)a.attachEvent("on"+c,function(){return d.call(a,window.event)});else if(a&&a.length)for(var b=0;b<a.length;b++)addEvent(a[b],c,d)}}();
 	
 	var responsiveImage = function(img, width, monitor) {
+	
+		var bp = [320, 480, 524, 768, 980];
+		var src = img.src;
+		var size = '_' + bp[0];
 		
 		if (img.length) {
 			for (var i = 0, len = img.length; i < len; i++) {
 			  responsiveImage(img[i], width, monitor);
 			}
 		}
-		
 		else {
-			
-			var _size = '_320'; // base size
-			var _src = img.src;
-			
-			if (img.clientWidth > 320 && img.clientWidth < 481) {
-				_size = '_480';
-				var responsiveimg = new Image();
-				addEvent(responsiveimg, 'load', function(e) {
-			      img.src = this.src;
-			  });
-			  responsiveimg.src = _src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + _size + '$3');
-			}
-			
-			if (img.clientWidth > 480 && img.clientWidth < 769) {
-				_size = '_768';
-				var responsiveimg = new Image();
-				addEvent(responsiveimg, 'load', function(e) {
-				    img.src = this.src;
-				});
-				responsiveimg.src = _src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + _size + '$3');
-			}
-					
-			if (img.clientWidth > 768) {
-				_size = '_980';
-				var responsiveimg = new Image();
-				addEvent(responsiveimg, 'load', function(e) {
-				    img.src = this.src;
-				});
-				responsiveimg.src = _src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + _size + '$3');
-	}
-			
-			console.log('viewport = ' + img.clientWidth + ' therefore image size = ' + _size);
+			for (var i = 0; i < bp.length - 1; i++) {
+				if (img.clientWidth > bp[i]) {
+					size = '_' + bp[i+1];
+				}
+			}	
+			var responsiveimg = new Image();
+			addEvent(responsiveimg, 'load', function(e) {
+				img.src = this.src;
+			});
+			responsiveimg.src = src.replace(/(\/img\/)(_\d+)(\/.+)/, '$1' + size + '$3');
 		}
-		
 		if (monitor != false) {
 			addEvent(window, 'resize', function(e) {
 			  responsiveImage(img, width, false);
@@ -101,4 +81,4 @@ Inspiration from [Automatic Responsive Images in WordPress](http://viewportindus
 
 #### Notes
 
-There’s no doubt in my mind that somebody smarter than I would be able to drmatically improve and shorten this script. For example, I imagine it could be shortened into a loop, with an easy-to-edit array of breakpoints included at the top, which also control the loop. Early days.
+There’s no doubt in my mind that somebody smarter than I would be able to drmatically improve and shorten this script. For example, I imagine it could be shortened into a loop, with an easy-to-edit array of breakpoints included at the top, which also control the loop. Done that bit!

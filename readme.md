@@ -1,15 +1,17 @@
 # Responsive Image
 
-The script checks if an image is larger than a specified width, then loads in a higher resolution image. It compares the current viewport width to an array of user set breakpoints then updates the `src` to the most appropriately sized image. This is an [ExpressionEngine](http://expressionengine.com/) focussed implementation, but can be adapted easily for use elsewhere.
+The script checks if an image is larger than a specified width, then loads in a higher resolution image. It compares the current viewport width to an array of user set breakpoints then updates the `src` to the most appropriately sized image. This is an [ExpressionEngine](http://expressionengine.com/) focussed implementation, but can be adapted easily for use in other systems.
 
 #### Method
 
-* Adhering the the principles of mobile first, the smallest image should be included in the markup
-* The user sets the breakpoint values in the array to match the image options they have prepared
+* Adhering the the principles of mobile first the smallest image is included in the markup
 * We use an `id="responsiveimage"` on the`img` element to trigger the script
-* No need for additional `class` or `data` attributes pointing to other image sources are required
-* The script compares the viewport width to a number of breakpoints in the script
-* And switches the path to the most appropriately sized image
+* No need for additional `class` or `data` attributes pointing to other image sources
+* Don’t forget the absolutely necessary `img { width: 100% }`
+* User sets the breakpoint values in the array to match the image options they have prepared
+* Assumes image paths such as `/img/_320/image-name.ext` and `/img/_768/image-name.ext`
+* Script compares the viewport width to the user set breakpoints in the script
+* Script switches the path to the most appropriately sized image, using a regexp
 
 #### EE
 
@@ -78,7 +80,3 @@ Inspiration from [Automatic Responsive Images in WordPress](http://viewportindus
 			});
 		}
 	};
-
-#### Notes
-
-There’s no doubt in my mind that somebody smarter than I would be able to drmatically improve and shorten this script. For example, I imagine it could be shortened into a loop, with an easy-to-edit array of breakpoints included at the top, which also control the loop. Done that bit!
